@@ -41,6 +41,16 @@ edible: false
 
 ghosts = [inky, blinky, pinky, clyde];
 
+function edibleOrInedible(ghost) {
+
+  if (ghost["edible"] === true) {
+    return "edible";
+  }
+  else {
+    return "inedible";
+  }
+
+}
 
 // replace this comment with your four ghosts setup as objects
 
@@ -72,8 +82,9 @@ function displayMenu() {
   if (powerPellets > 0) {
       console.log('(p) Eat Power Pellet');
   }
+
   for (var i = 0; i < ghosts.length; i++) {
-      console.log("("+(i+1)+")" + " Eat " + ghosts[i]["name"]);
+      console.log("("+(i+1)+")" + " Eat " + ghosts[i]["name"] + " " + "(" + edibleOrInedible(ghosts[i]) + ")");
   }
 
   console.log('(q) Quit');
@@ -93,13 +104,19 @@ function eatDot() {
 }
 
 function eatGhost(ghost) {
+
   if (ghost["edible"] === false) {
     lives -=1;
+    console.log("\n" + ghost["colour"] + " " + ghost["name"] + " took a life!")
+    gameOver();
+  }
+  else {
+    console.log("\nPac-Man ate " + ghost["character"] + " " + ghost["name"])
+    score += 200;
+    ghost["edible"] = false;
   }
 
-   console.log("\n" + ghost["colour"] + " " + ghost["name"] + " took a life!")
 
-   gameOver();
 }
 
 function eatPowerPellet() {
@@ -124,7 +141,7 @@ function gameOver() {
 }
 
 // Process Player's Input
-//used an if statement in the case p, to allow for eating if pellets greater 0. 
+//used an if statement in the case p, to allow for eating if pellets greater 0.
 function processInput(key) {
   switch(key) {
     case '\u0003': // This makes it so CTRL-C will quit the program
