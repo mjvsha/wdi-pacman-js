@@ -1,6 +1,8 @@
 // Setup initial game stats
 var score = 0;
 var lives = 2;
+var powerPellets = 4;
+
 
 
 // Define your ghosts here
@@ -32,7 +34,7 @@ edible: false
 var clyde = {
 menu_option: '4',
 name: 'Clyde',
-colour: 'orange',
+colour: 'Orange',
 character: 'Pokey',
 edible: false
 };
@@ -59,14 +61,20 @@ function clearScreen() {
 
 function displayStats() {
   console.log('Score: ' + score + '     Lives: ' + lives);
+  console.log('Power Pellets: ' + powerPellets);
 }
+
+
 
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
-    for (var i = 0; i < ghosts.length; i++) {
-      console.log("("+(i+1)+")" + " " + ghosts[i]["name"]);
-    }
+  if (powerPellets > 0) {
+      console.log('(p) Eat Power Pellet');
+  }
+  for (var i = 0; i < ghosts.length; i++) {
+      console.log("("+(i+1)+")" + " Eat " + ghosts[i]["name"]);
+  }
 
   console.log('(q) Quit');
 }
@@ -88,10 +96,35 @@ function eatGhost(ghost) {
   if (ghost["edible"] === false) {
     lives -=1;
   }
-    console.log("\n" + ghost["colour"] + " " + ghost["name"] + " took a life!")
+
+   console.log("\n" + ghost["colour"] + " " + ghost["name"] + " took a life!")
+
+   gameOver();
+}
+
+function eatPowerPellet() {
+  score += 50;
+  for (var i = 0; i < ghosts.length; i++) {
+    ghosts[i]["edible"] = true;
+  }
+
+  powerPellets -=1;
+}
+
+function ifNoPowerPellets() {
+  if (powerPellets < 0 ) {
+
+  }
+}
+
+function gameOver() {
+  if (lives < 0) {
+    process.exit();
+  }
 }
 
 // Process Player's Input
+//used an if statement in the case p, to allow for eating if pellets greater 0. 
 function processInput(key) {
   switch(key) {
     case '\u0003': // This makes it so CTRL-C will quit the program
@@ -101,6 +134,15 @@ function processInput(key) {
     case 'd':
       eatDot();
       break;
+    case 'p':
+      if (powerPellets > 0) {
+      eatPowerPellet();
+      break;
+    }
+    else {
+      console.log("\nNo Power Pellets left homeboy!")
+      break;
+    }
     case '1':
       eatGhost(inky);
       break;
