@@ -65,11 +65,12 @@ function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
     for (var i = 0; i < ghosts.length; i++) {
-      console.log("("+(i+1)+")" + " " + ghosts[i]["name"]); 
+      console.log("("+(i+1)+")" + " " + ghosts[i]["name"]);
     }
 
   console.log('(q) Quit');
 }
+
 
 function displayPrompt() {
   // process.stdout.write is similar to console.log except it doesn't add a new line after the text
@@ -83,6 +84,12 @@ function eatDot() {
   score += 10;
 }
 
+function eatGhost(ghost) {
+  if (ghost["edible"] === false) {
+    lives -=1;
+  }
+    console.log("\n" + ghost["colour"] + " " + ghost["name"] + " took a life!")
+}
 
 // Process Player's Input
 function processInput(key) {
@@ -93,6 +100,18 @@ function processInput(key) {
       break;
     case 'd':
       eatDot();
+      break;
+    case '1':
+      eatGhost(inky);
+      break;
+    case '2':
+      eatGhost(blinky);
+      break;
+    case '3':
+      eatGhost(pinky);
+      break;
+    case '4':
+      eatGhost(clyde);
       break;
     default:
       console.log('\nInvalid Command!');
