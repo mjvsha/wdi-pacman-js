@@ -27,7 +27,7 @@ name: 'Pinky',
 colour: 'Pink',
 character: 'Bashful',
 edible: false
-}; 
+};
 
 var clyde = {
 menu_option: '4',
@@ -36,6 +36,9 @@ colour: 'orange',
 character: 'Pokey',
 edible: false
 };
+
+ghosts = [inky, blinky, pinky, clyde];
+
 
 // replace this comment with your four ghosts setup as objects
 
@@ -61,6 +64,10 @@ function displayStats() {
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
+    for (var i = 0; i < ghosts.length; i++) {
+      console.log("("+(i+1)+")" + " " + ghosts[i]["name"]); 
+    }
+
   console.log('(q) Quit');
 }
 
